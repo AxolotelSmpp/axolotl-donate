@@ -191,8 +191,7 @@ const nick = nickInput.value.trim();
   if (!response.ok) {
     message.innerHTML =
       "❌ " +
-      (data.error ||
-        "Nepavyko sukurti užsakymo.");
+      (data.error || "Nepavyko sukurti užsakymo.");
 
     throw new Error(
       data.error || "Create order failed"
