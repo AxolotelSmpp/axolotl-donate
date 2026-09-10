@@ -54,14 +54,9 @@ const message = document.getElementById("message");
 let selectedProduct = null;
 
 function renderProducts() {
-if (!productsContainer) {
-console.error("Nerastas #products elementas.");
-return;
-}
-
 productsContainer.innerHTML = "";
 
-products.forEach((product, index) => {
+products.forEach(function(product, index) {
 const card = document.createElement("div");
 
 ```
@@ -71,34 +66,29 @@ if (index === 1) {
   card.classList.add("featured");
 }
 
-card.innerHTML = `
-  ${index === 1 ? '<div class="badge">POPULIARIAUSIAS</div>' : ""}
+let featuresHTML = "";
 
-  <div class="icon">${product.icon}</div>
+product.features.forEach(function(feature) {
+  featuresHTML += "<li>✓ " + feature + "</li>";
+});
 
-  <h2>${product.name}</h2>
-
-  <p>${product.description}</p>
-
-  <div class="price">
-    ${product.price}
-    <small> / vieną kartą</small>
-  </div>
-
-  <ul>
-    ${product.features
-      .map(feature => `<li>✓ ${feature}</li>`)
-      .join("")}
-  </ul>
-
-  <button class="buy" type="button">
-    🫧 Pasirinkti
-  </button>
-`;
+card.innerHTML =
+  (index === 1 ? '<div class="badge">POPULIARIAUSIAS</div>' : "") +
+  '<div class="icon">' + product.icon + "</div>" +
+  "<h2>" + product.name + "</h2>" +
+  "<p>" + product.description + "</p>" +
+  '<div class="price">' +
+  product.price +
+  '<small> / vieną kartą</small>' +
+  "</div>" +
+  "<ul>" +
+  featuresHTML +
+  "</ul>" +
+  '<button class="buy" type="button">🫧 Pasirinkti</button>';
 
 const button = card.querySelector(".buy");
 
-button.addEventListener("click", () => {
+button.addEventListener("click", function() {
   selectProduct(product);
 });
 
@@ -111,27 +101,12 @@ productsContainer.appendChild(card);
 function selectProduct(product) {
 selectedProduct = product;
 
-if (chosen) {
 chosen.textContent = product.name;
-}
-
-if (chosenPrice) {
 chosenPrice.textContent = product.price;
-}
-
-if (message) {
 message.innerHTML = "";
-}
 
-const shop = document.getElementById("shop");
-
-if (shop) {
-shop.classList.add("hidden");
-}
-
-if (checkout) {
+document.getElementById("shop").classList.add("hidden");
 checkout.classList.remove("hidden");
-}
 
 window.scrollTo({
 top: 0,
@@ -140,15 +115,8 @@ behavior: "smooth"
 }
 
 function back() {
-if (checkout) {
 checkout.classList.add("hidden");
-}
-
-const shop = document.getElementById("shop");
-
-if (shop) {
-shop.classList.remove("hidden");
-}
+document.getElementById("shop").classList.remove("hidden");
 
 window.scrollTo({
 top: 0,
@@ -158,17 +126,13 @@ behavior: "smooth"
 
 function pay() {
 const nickInput = document.getElementById("nick");
-
-if (!nickInput || !message) {
-return;
-}
-
 const nick = nickInput.value.trim();
 
 if (!nick) {
-message.innerHTML = `       <div class="success">
-        ❌ Įrašyk savo Minecraft nick.       </div>
-    `;
+message.innerHTML =
+'<div class="success">' +
+"❌ Įrašyk savo Minecraft nick." +
+"</div>";
 
 ```
 return;
@@ -177,9 +141,10 @@ return;
 }
 
 if (!/^[A-Za-z0-9_]{3,16}$/.test(nick)) {
-message.innerHTML = `       <div class="success">
-        ❌ Minecraft nick turi būti 3–16 simbolių.       </div>
-    `;
+message.innerHTML =
+'<div class="success">' +
+"❌ Minecraft nick turi būti 3–16 simbolių." +
+"</div>";
 
 ```
 return;
@@ -191,26 +156,20 @@ if (!selectedProduct) {
 return;
 }
 
-message.innerHTML = ` <div class="success">
-✅ Užsakymas paruoštas!<br><br>
-
-```
-  <strong>${selectedProduct.name}</strong><br>
-
-  Minecraft nick:
-  <strong>${nick}</strong><br>
-
-  Kaina:
-  <strong>${selectedProduct.price}</strong>
-
-  <br><br>
-
-  🫧 DEMO režimas —
-  tikras mokėjimas dar neprijungtas.
-</div>
-```
-
-`;
+message.innerHTML =
+'<div class="success">' +
+"✅ Užsakymas paruoštas!<br><br>" +
+"<strong>" +
+selectedProduct.name +
+"</strong><br>" +
+"Minecraft nick: <strong>" +
+nick +
+"</strong><br>" +
+"Kaina: <strong>" +
+selectedProduct.price +
+"</strong><br><br>" +
+"🫧 DEMO režimas — tikras mokėjimas dar neprijungtas." +
+"</div>";
 
 nickInput.value = "";
 }
