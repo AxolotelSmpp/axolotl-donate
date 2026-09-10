@@ -4,44 +4,28 @@ name: "Axolotl Rėmėjas",
 icon: "🦎",
 price: "2.99 €",
 description: "Palaikyk Axolotl Network ir gauk išskirtines privilegijas.",
-features: [
-"Rėmėjo statusas",
-"Speciali žinutė",
-"Axolotl privilegijos"
-]
+features: ["Rėmėjo statusas", "Speciali žinutė", "Axolotl privilegijos"]
 },
 {
 name: "Warden Rėmėjas",
 icon: "🛡️",
 price: "4.99 €",
 description: "Galingesnis rėmėjo rangas tikriems serverio palaikytojams.",
-features: [
-"Warden statusas",
-"Papildomos privilegijos",
-"Warden išskirtinumas"
-]
+features: ["Warden statusas", "Papildomos privilegijos", "Warden išskirtinumas"]
 },
 {
 name: "Fox Rėmėjas",
 icon: "🦊",
 price: "7.99 €",
 description: "Išskirtinis Fox rangas ir daugiau privilegijų.",
-features: [
-"Fox statusas",
-"Fox privilegijos",
-"Išskirtinis rangas"
-]
+features: ["Fox statusas", "Fox privilegijos", "Išskirtinis rangas"]
 },
 {
 name: "Papūga Rėmėjas",
 icon: "🦜",
 price: "10.00 €",
 description: "Aukščiausias iš šių rėmėjo rangų.",
-features: [
-"Papūga statusas",
-"Papūgos privilegijos",
-"Aukščiausias rangas"
-]
+features: ["Papūga statusas", "Papūgos privilegijos", "Aukščiausias rangas"]
 }
 ];
 
@@ -54,14 +38,21 @@ const message = document.getElementById("message");
 let selectedProduct = null;
 
 function renderProducts() {
-products.forEach(function(product, index) {
+if (!productsContainer) {
+return;
+}
+
+productsContainer.innerHTML = "";
+
+for (let i = 0; i < products.length; i++) {
+const product = products[i];
 
 ```
 const card = document.createElement("div");
 card.className = "card";
 
-if (index === 1) {
-  card.className = "card featured";
+if (i === 1) {
+  card.classList.add("featured");
 }
 
 const icon = document.createElement("div");
@@ -80,20 +71,20 @@ price.textContent = product.price;
 
 const list = document.createElement("ul");
 
-product.features.forEach(function(feature) {
+for (let j = 0; j < product.features.length; j++) {
   const item = document.createElement("li");
-  item.textContent = "✓ " + feature;
+  item.textContent = "✓ " + product.features[j];
   list.appendChild(item);
-});
+}
 
 const button = document.createElement("button");
 button.className = "buy";
 button.type = "button";
 button.textContent = "🫧 Pasirinkti";
 
-button.onclick = function() {
+button.addEventListener("click", function () {
   selectProduct(product);
-};
+});
 
 card.appendChild(icon);
 card.appendChild(title);
@@ -105,7 +96,7 @@ card.appendChild(button);
 productsContainer.appendChild(card);
 ```
 
-});
+}
 }
 
 function selectProduct(product) {
@@ -113,8 +104,7 @@ selectedProduct = product;
 
 chosen.textContent = product.name;
 chosenPrice.textContent = product.price;
-
-message.textContent = "";
+message.innerHTML = "";
 
 document.getElementById("shop").classList.add("hidden");
 checkout.classList.remove("hidden");
@@ -134,7 +124,14 @@ const nickInput = document.getElementById("nick");
 const nick = nickInput.value.trim();
 
 if (!nick) {
-message.textContent = "❌ Įrašyk savo Minecraft nick.";
+message.innerHTML =
+'<div class="success">❌ Įrašyk savo Minecraft nick.</div>';
+return;
+}
+
+if (!/^[A-Za-z0-9_]{3,16}$/.test(nick)) {
+message.innerHTML =
+'<div class="success">❌ Minecraft nick turi būti 3–16 simbolių.</div>';
 return;
 }
 
@@ -142,14 +139,14 @@ if (!selectedProduct) {
 return;
 }
 
-message.textContent =
-"✅ Užsakymas paruoštas! " +
-selectedProduct.name +
-" — " +
-nick +
-" — " +
-selectedProduct.price +
-". DEMO režimas.";
+message.innerHTML =
+'<div class="success">' +
+"✅ Užsakymas paruoštas!<br><br>" +
+"<strong>" + selectedProduct.name + "</strong><br>" +
+"Minecraft nick: <strong>" + nick + "</strong><br>" +
+"Kaina: <strong>" + selectedProduct.price + "</strong><br><br>" +
+"🫧 DEMO režimas — tikras mokėjimas dar neprijungtas." +
+"</div>";
 
 nickInput.value = "";
 }
