@@ -50,7 +50,6 @@ productsContainer.innerHTML = "";
 for (let i = 0; i < products.length; i++) {
 const product = products[i];
 
-```
 const card = document.createElement("div");
 card.className = "card";
 
@@ -58,25 +57,23 @@ if (i === 1) {
   card.classList.add("featured");
 }
 
-card.innerHTML = `
-  <div class="icon">${product.icon}</div>
-  <h2>${product.name}</h2>
-  <p>${product.description}</p>
-  <div class="price">${product.price}</div>
-  <ul>
-    <li>✓ ${product.features[0]}</li>
-    <li>✓ ${product.features[1]}</li>
-    <li>✓ ${product.features[2]}</li>
-  </ul>
-  <button class="buy" type="button">🫧 Pasirinkti</button>
-`;
+card.innerHTML =
+  '<div class="icon">' + product.icon + '</div>' +
+  '<h2>' + product.name + '</h2>' +
+  '<p>' + product.description + '</p>' +
+  '<div class="price">' + product.price + '</div>' +
+  '<ul>' +
+  '<li>✓ ' + product.features[0] + '</li>' +
+  '<li>✓ ' + product.features[1] + '</li>' +
+  '<li>✓ ' + product.features[2] + '</li>' +
+  '</ul>' +
+  '<button class="buy" type="button">🫧 Pasirinkti</button>';
 
 card.querySelector(".buy").addEventListener("click", function () {
   selectProduct(product);
 });
 
 productsContainer.appendChild(card);
-```
 
 }
 }
@@ -132,7 +129,6 @@ script.onerror = function () {
 };
 
 document.head.appendChild(script);
-```
 
 } catch (error) {
 console.error(error);
@@ -168,9 +164,6 @@ const nick = nickInput.value.trim();
       "❌ Minecraft nick turi būti 3–16 simbolių.";
     throw new Error("Invalid Minecraft nick");
   }
-
-  message.innerHTML =
-    "⏳ Kuriamas PayPal užsakymas...";
 
   const response = await fetch(
     "/api/paypal/create-order",
@@ -230,12 +223,11 @@ onApprove: async function (data) {
         "❌ " +
         (result.error ||
           "Mokėjimo nepavyko patvirtinti.");
-
       return;
     }
 
     message.innerHTML =
-      "✅ <strong>Mokėjimas sėkmingas!</strong><br><br>" +
+      "✅ Mokėjimas sėkmingas!<br><br>" +
       "Rangas: <strong>" +
       result.order.product +
       "</strong><br>" +
@@ -267,7 +259,6 @@ onError: function (error) {
   message.innerHTML =
     "❌ PayPal klaida. Bandyk dar kartą.";
 }
-```
 
 });
 
