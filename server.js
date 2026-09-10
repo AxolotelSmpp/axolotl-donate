@@ -1,3 +1,4 @@
+```javascript
 import express from "express";
 import fs from "fs";
 import path from "path";
@@ -6,7 +7,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const ordersFile = path.join(__dirname, "data", "orders.json");
 
@@ -17,59 +18,61 @@ if (!fs.existsSync(ordersFile)) {
 }
 
 const products = {
-  vip: {
-    id: "vip",
-    name: "Axolotl VIP",
+  axolotl: {
+    id: "axolotl",
+    name: "Axolotl",
+    price: 2.99,
+    features: [
+      "⭐ Rėmėjo statusas",
+      "🎨 Speciali žinutė",
+      "🦎 Axolotl privilegijos"
+    ]
+  },
+
+  warden: {
+    id: "warden",
+    name: "Warden",
     price: 4.99,
     features: [
-      "VIP prefix",
-      "VIP komandos",
-      "Kosmetikos"
+      "⭐ Warden statusas",
+      "⚡ Papildomos privilegijos",
+      "🛡️ Warden išskirtinumas"
     ]
   },
 
-  mvp: {
-    id: "mvp",
-    name: "Axolotl MVP",
-    price: 9.99,
+  fox: {
+    id: "fox",
+    name: "Fox",
+    price: 7.99,
     features: [
-      "MVP prefix",
-      "Daugiau kosmetikos",
-      "MVP komandos",
-      "Prioritetas"
+      "⭐ Fox statusas",
+      "🦊 Fox privilegijos",
+      "✨ Išskirtinis rangas"
     ]
   },
 
-  elite: {
-    id: "elite",
-    name: "Axolotl ELITE",
-    price: 19.99,
+  parrot: {
+    id: "parrot",
+    name: "Papūga",
+    price: 10.00,
     features: [
-      "ELITE prefix",
-      "Visos kosmetikos",
-      "ELITE komandos",
-      "Didžiausias prioritetas"
+      "⭐ Papūga statusas",
+      "🦜 Papūgos privilegijos",
+      "👑 Aukščiausias rangas"
     ]
   }
 };
 
 app.use(express.json());
 
-app.use(
-  express.static(
-    path.join(__dirname, "public")
-  )
-);
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/api/products", (req, res) => {
   res.json(Object.values(products));
 });
 
 app.post("/api/orders", (req, res) => {
-  const {
-    productId,
-    minecraftName
-  } = req.body;
+  const { productId, minecraftName } = req.body;
 
   if (!products[productId]) {
     return res.status(400).json({
@@ -77,14 +80,11 @@ app.post("/api/orders", (req, res) => {
     });
   }
 
-  if (
-    !/^[A-Za-z0-9_]{3,16}$/.test(
-      String(minecraftName || "")
-    )
-  ) {
+  const nick = String(minecraftName || "").trim();
+
+  if (!/^[A-Za-z0-9_]{3,16}$/.test(nick)) {
     return res.status(400).json({
-      error:
-        "Minecraft nick turi būti 3–16 simbolių."
+      error: "Minecraft nick turi būti 3–16 simbolių."
     });
   }
 
@@ -96,7 +96,7 @@ app.post("/api/orders", (req, res) => {
 
   const order = {
     id: "AXO-" + Date.now(),
-    minecraftName: minecraftName,
+    minecraftName: nick,
     product: product.name,
     productId: product.id,
     amount: product.price,
@@ -113,13 +113,12 @@ app.post("/api/orders", (req, res) => {
 
   res.json({
     ok: true,
-    order: order
+    order
   });
 });
 
 app.get("/api/admin/orders", (req, res) => {
-  const adminKey =
-    req.headers["x-admin-key"];
+  const adminKey = req.headers["x-admin-key"];
 
   if (adminKey !== "axolotl123") {
     return res.status(401).json({
@@ -136,19 +135,12 @@ app.get("/api/admin/orders", (req, res) => {
 
 app.get("*", (req, res) => {
   res.sendFile(
-    path.join(
-      __dirname,
-      "public",
-      "index.html"
-    )
+    path.join(__dirname, "public", "index.html")
   );
 });
 
-app.listen(PORT, () => {
-  console.log("");
+app.listen(PORT, "0.0.0.0", () => {
   console.log("🦎 Axolotl Donate paleistas!");
-  console.log(
-    "🌐 http://localhost:" + PORT
-  );
-  console.log("");
+  console.log("🌐 Portas: " + PORT);
 });
+```
