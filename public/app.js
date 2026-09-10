@@ -47,37 +47,56 @@ let paypalButtons = null;
 function renderProducts() {
 productsContainer.innerHTML = "";
 
-for (let i = 0; i < products.length; i++) {
-const product = products[i];
-
-```
+products.forEach(function (product, index) {
 const card = document.createElement("div");
 card.className = "card";
 
-if (i === 1) {
+
+if (index === 1) {
   card.classList.add("featured");
 }
 
-card.innerHTML =
-  '<div class="icon">' + product.icon + '</div>' +
-  '<h2>' + product.name + '</h2>' +
-  '<p>' + product.description + '</p>' +
-  '<div class="price">' + product.price + '</div>' +
-  '<ul>' +
-  '<li>✓ ' + product.features[0] + '</li>' +
-  '<li>✓ ' + product.features[1] + '</li>' +
-  '<li>✓ ' + product.features[2] + '</li>' +
-  '</ul>' +
-  '<button class="buy" type="button">🫧 Pasirinkti</button>';
+const icon = document.createElement("div");
+icon.className = "icon";
+icon.textContent = product.icon;
 
-card.querySelector(".buy").addEventListener("click", function () {
+const title = document.createElement("h2");
+title.textContent = product.name;
+
+const description = document.createElement("p");
+description.textContent = product.description;
+
+const price = document.createElement("div");
+price.className = "price";
+price.textContent = product.price;
+
+const list = document.createElement("ul");
+
+product.features.forEach(function (feature) {
+  const item = document.createElement("li");
+  item.textContent = "✓ " + feature;
+  list.appendChild(item);
+});
+
+const button = document.createElement("button");
+button.className = "buy";
+button.type = "button";
+button.textContent = "🫧 Pasirinkti";
+
+button.addEventListener("click", function () {
   selectProduct(product);
 });
 
-productsContainer.appendChild(card);
-```
+card.appendChild(icon);
+card.appendChild(title);
+card.appendChild(description);
+card.appendChild(price);
+card.appendChild(list);
+card.appendChild(button);
 
-}
+productsContainer.appendChild(card);
+
+});
 }
 
 function selectProduct(product) {
@@ -103,7 +122,7 @@ try {
 const configResponse = await fetch("/api/paypal/config");
 const config = await configResponse.json();
 
-```
+
 if (!config.clientId) {
   paypalContainer.innerHTML = "❌ PayPal Client ID nerastas.";
   return;
@@ -131,15 +150,14 @@ script.onerror = function () {
 };
 
 document.head.appendChild(script);
-```
+
 
 } catch (error) {
 console.error(error);
 
-```
+
 paypalContainer.innerHTML =
   "❌ Nepavyko prisijungti prie PayPal.";
-```
 
 }
 }
@@ -155,7 +173,6 @@ paypalButtons = window.paypal.Buttons({
 createOrder: async function () {
 const nick = nickInput.value.trim();
 
-```
   if (!nick) {
     message.innerHTML =
       "❌ Pirmiausia įrašyk savo Minecraft nick.";
@@ -167,9 +184,6 @@ const nick = nickInput.value.trim();
       "❌ Minecraft nick turi būti 3–16 simbolių.";
     throw new Error("Invalid Minecraft nick");
   }
-
-  message.innerHTML =
-    "⏳ Kuriamas PayPal užsakymas...";
 
   const response = await fetch(
     "/api/paypal/create-order",
@@ -265,7 +279,6 @@ onError: function (error) {
   message.innerHTML =
     "❌ PayPal klaida. Bandyk dar kartą.";
 }
-```
 
 });
 
