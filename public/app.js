@@ -169,25 +169,34 @@ const nick = nickInput.value.trim();
     throw new Error("Invalid Minecraft nick");
   }
 
-  message.innerHTML = "⏳ Kuriamas PayPal užsakymas...";
+  message.innerHTML =
+    "⏳ Kuriamas PayPal užsakymas...";
 
-  const response = await fetch("/api/paypal/create-order", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      productId: selectedProduct.id,
-      minecraftName: nick
-    })
-  });
+  const response = await fetch(
+    "/api/paypal/create-order",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        productId: selectedProduct.id,
+        minecraftName: nick
+      })
+    }
+  );
 
   const data = await response.json();
 
   if (!response.ok) {
     message.innerHTML =
-      "❌ " + (data.error || "Nepavyko sukurti užsakymo.");
-    throw new Error(data.error || "Create order failed");
+      "❌ " +
+      (data.error ||
+        "Nepavyko sukurti užsakymo.");
+
+    throw new Error(
+      data.error || "Create order failed"
+    );
   }
 
   return data.id;
@@ -222,6 +231,7 @@ onApprove: async function (data) {
         "❌ " +
         (result.error ||
           "Mokėjimo nepavyko patvirtinti.");
+
       return;
     }
 
