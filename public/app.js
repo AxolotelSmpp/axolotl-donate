@@ -50,6 +50,7 @@ productsContainer.innerHTML = "";
 for (let i = 0; i < products.length; i++) {
 const product = products[i];
 
+```
 const card = document.createElement("div");
 card.className = "card";
 
@@ -74,6 +75,7 @@ card.querySelector(".buy").addEventListener("click", function () {
 });
 
 productsContainer.appendChild(card);
+```
 
 }
 }
@@ -129,6 +131,7 @@ script.onerror = function () {
 };
 
 document.head.appendChild(script);
+```
 
 } catch (error) {
 console.error(error);
@@ -164,6 +167,9 @@ const nick = nickInput.value.trim();
       "❌ Minecraft nick turi būti 3–16 simbolių.";
     throw new Error("Invalid Minecraft nick");
   }
+
+  message.innerHTML =
+    "⏳ Kuriamas PayPal užsakymas...";
 
   const response = await fetch(
     "/api/paypal/create-order",
@@ -259,6 +265,7 @@ onError: function (error) {
   message.innerHTML =
     "❌ PayPal klaida. Bandyk dar kartą.";
 }
+```
 
 });
 
