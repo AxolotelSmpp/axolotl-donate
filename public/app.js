@@ -1,49 +1,48 @@
-```javascript
 const products = [
-  {
-    name: "Axolotl Rėmėjas",
-    icon: "🦎",
-    price: "2.99 €",
-    description: "Palaikyk Axolotl Network ir gauk išskirtines privilegijas.",
-    features: [
-      "⭐ Rėmėjo statusas",
-      "🎨 Speciali žinutė",
-      "🦎 Axolotl privilegijos"
-    ]
-  },
-  {
-    name: "Warden Rėmėjas",
-    icon: "🛡️",
-    price: "4.99 €",
-    description: "Galingesnis rėmėjo rangas tikriems serverio palaikytojams.",
-    features: [
-      "⭐ Warden statusas",
-      "⚡ Papildomos privilegijos",
-      "🛡️ Warden išskirtinumas"
-    ]
-  },
-  {
-    name: "Fox Rėmėjas",
-    icon: "🦊",
-    price: "7.99 €",
-    description: "Išskirtinis Fox rangas ir daugiau privilegijų.",
-    features: [
-      "⭐ Fox statusas",
-      "🦊 Fox privilegijos",
-      "✨ Išskirtinis rangas"
-    ]
-  },
-  {
-    name: "Papūga Rėmėjas",
-    icon: "🦜",
-    price: "10.00 €",
-    description: "Aukščiausias iš šių rėmėjo rangų.",
-    features: [
-      "⭐ Papūga statusas",
-      "🦜 Papūgos privilegijos",
-      "👑 Aukščiausias rangas"
-    ]
-  }
+{
+name: "Axolotl Rėmėjas",
+icon: "🦎",
+price: "2.99 €",
+description: "Palaikyk Axolotl Network ir gauk išskirtines privilegijas.",
+features: [
+"⭐ Rėmėjo statusas",
+"🎨 Speciali žinutė",
+"🦎 Axolotl privilegijos"
+]
+},
+{
+name: "Warden Rėmėjas",
+icon: "🛡️",
+price: "4.99 €",
+description: "Galingesnis rėmėjo rangas tikriems serverio palaikytojams.",
+features: [
+"⭐ Warden statusas",
+"⚡ Papildomos privilegijos",
+"🛡️ Warden išskirtinumas"
+]
+},
+{
+name: "Fox Rėmėjas",
+icon: "🦊",
+price: "7.99 €",
+description: "Išskirtinis Fox rangas ir daugiau privilegijų.",
+features: [
+"⭐ Fox statusas",
+"🦊 Fox privilegijos",
+"✨ Išskirtinis rangas"
+]
+},
+{
+name: "Papūga Rėmėjas",
+icon: "🦜",
+price: "10.00 €",
+description: "Aukščiausias iš šių rėmėjo rangų.",
+features: [
+"⭐ Papūga statusas",
+"🦜 Papūgos privilegijos",
+"👑 Aukščiausias rangas"
+]
+}
 ];
 
 const productsContainer = document.getElementById("products");
@@ -55,108 +54,168 @@ const message = document.getElementById("message");
 let selectedProduct = null;
 
 function renderProducts() {
-  productsContainer.innerHTML = "";
+if (!productsContainer) {
+console.error("Nerastas #products elementas.");
+return;
+}
 
-  products.forEach((product, index) => {
-    const card = document.createElement("div");
+productsContainer.innerHTML = "";
 
-    card.className = "card";
+products.forEach((product, index) => {
+const card = document.createElement("div");
 
-    if (index === 1) {
-      card.classList.add("featured");
-    }
+```
+card.className = "card";
 
-    card.innerHTML = `
-      ${index === 1 ? '<div class="badge">POPULIARIAUSIAS</div>' : ""}
+if (index === 1) {
+  card.classList.add("featured");
+}
 
-      <div class="icon">${product.icon}</div>
+card.innerHTML = `
+  ${index === 1 ? '<div class="badge">POPULIARIAUSIAS</div>' : ""}
 
-      <h2>${product.name}</h2>
+  <div class="icon">${product.icon}</div>
 
-      <p>${product.description}</p>
+  <h2>${product.name}</h2>
 
-      <div class="price">
-        ${product.price}
-        <small> / vieną kartą</small>
-      </div>
+  <p>${product.description}</p>
 
-      <ul>
-        ${product.features.map(feature => `<li>✓ ${feature}</li>`).join("")}
-      </ul>
+  <div class="price">
+    ${product.price}
+    <small> / vieną kartą</small>
+  </div>
 
-      <button class="buy">
-        🫧 Pasirinkti
-      </button>
-    `;
+  <ul>
+    ${product.features
+      .map(feature => `<li>✓ ${feature}</li>`)
+      .join("")}
+  </ul>
 
-    const button = card.querySelector(".buy");
+  <button class="buy" type="button">
+    🫧 Pasirinkti
+  </button>
+`;
 
-    button.addEventListener("click", () => {
-      selectProduct(product);
-    });
+const button = card.querySelector(".buy");
 
-    productsContainer.appendChild(card);
-  });
+button.addEventListener("click", () => {
+  selectProduct(product);
+});
+
+productsContainer.appendChild(card);
+```
+
+});
 }
 
 function selectProduct(product) {
-  selectedProduct = product;
+selectedProduct = product;
 
-  chosen.textContent = product.name;
-  chosenPrice.textContent = product.price;
+if (chosen) {
+chosen.textContent = product.name;
+}
 
-  message.innerHTML = "";
+if (chosenPrice) {
+chosenPrice.textContent = product.price;
+}
 
-  document.getElementById("shop").classList.add("hidden");
-  checkout.classList.remove("hidden");
+if (message) {
+message.innerHTML = "";
+}
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+const shop = document.getElementById("shop");
+
+if (shop) {
+shop.classList.add("hidden");
+}
+
+if (checkout) {
+checkout.classList.remove("hidden");
+}
+
+window.scrollTo({
+top: 0,
+behavior: "smooth"
+});
 }
 
 function back() {
-  checkout.classList.add("hidden");
-  document.getElementById("shop").classList.remove("hidden");
+if (checkout) {
+checkout.classList.add("hidden");
+}
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+const shop = document.getElementById("shop");
+
+if (shop) {
+shop.classList.remove("hidden");
+}
+
+window.scrollTo({
+top: 0,
+behavior: "smooth"
+});
 }
 
 function pay() {
-  const nickInput = document.getElementById("nick");
-  const nick = nickInput.value.trim();
+const nickInput = document.getElementById("nick");
 
-  if (!nick) {
-    message.innerHTML = `
-      <div class="success">
-        ❌ Įrašyk savo Minecraft nick.
-      </div>
-    `;
-
-    return;
-  }
-
-  if (!selectedProduct) {
-    return;
-  }
-
-  message.innerHTML = `
-    <div class="success">
-      ✅ Užsakymas paruoštas!<br><br>
-      <strong>${selectedProduct.name}</strong><br>
-      Minecraft nick: <strong>${nick}</strong><br>
-      Kaina: <strong>${selectedProduct.price}</strong>
-      <br><br>
-      🫧 DEMO režimas — tikras mokėjimas dar neprijungtas.
-    </div>
-  `;
-
-  nickInput.value = "";
+if (!nickInput || !message) {
+return;
 }
 
-renderProducts();
+const nick = nickInput.value.trim();
+
+if (!nick) {
+message.innerHTML = `       <div class="success">
+        ❌ Įrašyk savo Minecraft nick.       </div>
+    `;
+
 ```
+return;
+```
+
+}
+
+if (!/^[A-Za-z0-9_]{3,16}$/.test(nick)) {
+message.innerHTML = `       <div class="success">
+        ❌ Minecraft nick turi būti 3–16 simbolių.       </div>
+    `;
+
+```
+return;
+```
+
+}
+
+if (!selectedProduct) {
+return;
+}
+
+message.innerHTML = ` <div class="success">
+✅ Užsakymas paruoštas!<br><br>
+
+```
+  <strong>${selectedProduct.name}</strong><br>
+
+  Minecraft nick:
+  <strong>${nick}</strong><br>
+
+  Kaina:
+  <strong>${selectedProduct.price}</strong>
+
+  <br><br>
+
+  🫧 DEMO režimas —
+  tikras mokėjimas dar neprijungtas.
+</div>
+```
+
+`;
+
+nickInput.value = "";
+}
+
+window.back = back;
+window.pay = pay;
+
+renderProducts();
