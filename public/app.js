@@ -3,7 +3,7 @@ const products = [
 id: "axolotl",
 name: "Axolotl Rėmėjas",
 icon: "🦎",
-price: "2.99 €",
+price: "0.99 €",
 description: "Palaikyk Axolotl Network ir gauk išskirtines privilegijas.",
 features: ["Rėmėjo statusas", "Speciali žinutė", "Axolotl privilegijos"]
 },
@@ -11,7 +11,7 @@ features: ["Rėmėjo statusas", "Speciali žinutė", "Axolotl privilegijos"]
 id: "warden",
 name: "Warden Rėmėjas",
 icon: "🛡️",
-price: "4.99 €",
+price: "1.49 €",
 description: "Galingesnis rėmėjo rangas tikriems serverio palaikytojams.",
 features: ["Warden statusas", "Papildomos privilegijos", "Warden išskirtinumas"]
 },
@@ -19,7 +19,7 @@ features: ["Warden statusas", "Papildomos privilegijos", "Warden išskirtinumas"
 id: "fox",
 name: "Fox Rėmėjas",
 icon: "🦊",
-price: "7.99 €",
+price: "1.99 €",
 description: "Išskirtinis Fox rangas ir daugiau privilegijų.",
 features: ["Fox statusas", "Fox privilegijos", "Išskirtinis rangas"]
 },
@@ -27,7 +27,7 @@ features: ["Fox statusas", "Fox privilegijos", "Išskirtinis rangas"]
 id: "parrot",
 name: "Papūga Rėmėjas",
 icon: "🦜",
-price: "10.00 €",
+price: "2.50 €",
 description: "Aukščiausias iš šių rėmėjo rangų.",
 features: ["Papūga statusas", "Papūgos privilegijos", "Aukščiausias rangas"]
 }
