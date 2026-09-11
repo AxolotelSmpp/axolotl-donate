@@ -1,15 +1,28 @@
+```js
 const products = [
 {
 id: "axolotl",
-name: "Axolotl Rėmėjas",
+name: "Axolotl",
 icon: "🦎",
 price: "0.99 €",
 description: "Palaikyk Axolotl Network ir gauk išskirtines privilegijas.",
-features: ["Rėmėjo statusas", "Speciali žinutė", "Axolotl privilegijos"]
+features: [
+"Užrašas prieš vardo ir TAB sąraše: Axolotl",
+"Būsite labiau gerbiamas kitų žaidėjų",
+"Axolotl rinkinukas (/kit axolotl) kas 1 dieną",
+"Gali turėti 4 /sethome",
+"Gali aukcione pardavinėti 4 daiktus vienu metu",
+"Gali turėti 4 rezidencijas",
+"Gauna skelbimo komandą (/skelbti)",
+"Gali prisijungti į pilną serverį",
+"Komanda /craft",
+"Komanda /recipe",
+"Komanda /hat ant Axolotl"
+]
 },
 {
 id: "warden",
-name: "Warden Rėmėjas",
+name: "Warden",
 icon: "🛡️",
 price: "1.49 €",
 description: "Galingesnis rėmėjo rangas tikriems serverio palaikytojams.",
@@ -17,7 +30,7 @@ features: ["Warden statusas", "Papildomos privilegijos", "Warden išskirtinumas"
 },
 {
 id: "fox",
-name: "Fox Rėmėjas",
+name: "Fox",
 icon: "🦊",
 price: "1.99 €",
 description: "Išskirtinis Fox rangas ir daugiau privilegijų.",
@@ -25,7 +38,7 @@ features: ["Fox statusas", "Fox privilegijos", "Išskirtinis rangas"]
 },
 {
 id: "parrot",
-name: "Papūga Rėmėjas",
+name: "Papūga",
 icon: "🦜",
 price: "2.50 €",
 description: "Aukščiausias iš šių rėmėjo rangų.",
@@ -50,7 +63,6 @@ productsContainer.innerHTML = "";
 products.forEach(function (product, index) {
 const card = document.createElement("div");
 card.className = "card";
-
 
 if (index === 1) {
   card.classList.add("featured");
@@ -122,7 +134,6 @@ try {
 const configResponse = await fetch("/api/paypal/config");
 const config = await configResponse.json();
 
-
 if (!config.clientId) {
   paypalContainer.innerHTML = "❌ PayPal Client ID nerastas.";
   return;
@@ -151,10 +162,8 @@ script.onerror = function () {
 
 document.head.appendChild(script);
 
-
 } catch (error) {
 console.error(error);
-
 
 paypalContainer.innerHTML =
   "❌ Nepavyko prisijungti prie PayPal.";
@@ -299,3 +308,4 @@ window.scrollTo(0, 0);
 window.back = back;
 
 renderProducts();
+```
