@@ -1,4 +1,3 @@
-```js
 const products = [
 {
 id: "axolotl",
