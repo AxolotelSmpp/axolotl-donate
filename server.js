@@ -17,49 +17,22 @@ if (!fs.existsSync(ordersFile)) {
 }
 
 const products = {
-  axolotl: {
-    id: "axolotl",
-    name: "Axolotl Rėmėjas",
-    price: 2.99,
-    features: [
-      "⭐ Rėmėjo statusas",
-      "🎨 Speciali žinutė",
-      "🦎 Axolotl privilegijos"
-    ]
-  },
-
-  warden: {
-    id: "warden",
-    name: "Warden Rėmėjas",
-    price: 4.99,
-    features: [
-      "⭐ Warden statusas",
-      "⚡ Papildomos privilegijos",
-      "🛡️ Warden išskirtinumas"
-    ]
-  },
-
-  fox: {
-    id: "fox",
-    name: "Fox Rėmėjas",
-    price: 7.99,
-    features: [
-      "⭐ Fox statusas",
-      "🦊 Fox privilegijos",
-      "✨ Išskirtinis rangas"
-    ]
-  },
-
-  parrot: {
-    id: "parrot",
-    name: "Papūga Rėmėjas",
-    price: 10.00,
-    features: [
-      "⭐ Papūga statusas",
-      "🦜 Papūgos privilegijos",
-      "👑 Aukščiausias rangas"
-    ]
-  }
+    axolotl: {
+        name: "Axolotl Rėmėjas",
+        price: 0.99
+    },
+    warden: {
+        name: "Warden Rėmėjas",
+        price: 1.49
+    },
+    fox: {
+        name: "Fox Rėmėjas",
+        price: 1.99
+    },
+    parrot: {
+        name: "Papūga Rėmėjas",
+        price: 2.50
+    }
 };
 
 app.use(express.json());
