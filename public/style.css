@@ -230,6 +230,7 @@ h1 span {
 
 .icon {
   font-size: 38px;
+
   margin-top: 18px;
 }
 
@@ -252,6 +253,7 @@ h1 span {
 
 .price small {
   font-size: 11px;
+
   color: var(--muted);
 }
 
@@ -263,6 +265,48 @@ ul {
   line-height: 2;
 
   min-height: 115px;
+}
+
+.description-btn {
+  width: 100%;
+
+  border: 1px solid var(--line);
+
+  border-radius: 13px;
+
+  padding: 13px;
+
+  margin-bottom: 10px;
+
+  background: transparent;
+
+  color: var(--a);
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.description-btn:hover {
+  background: #69e2c512;
+
+  border-color: var(--a);
+
+  transform: translateY(-1px);
+}
+
+.card ul {
+  display: none;
+
+  margin-top: 10px;
+
+  margin-bottom: 15px;
+}
+
+.card ul.show {
+  display: block;
 }
 
 .buy {
@@ -281,10 +325,14 @@ ul {
   font-weight: 950;
 
   cursor: pointer;
+
+  transition: .2s;
 }
 
 .buy:hover {
   filter: brightness(1.08);
+
+  transform: translateY(-1px);
 }
 
 .checkout {
@@ -356,6 +404,7 @@ ul {
 
 .note {
   color: var(--muted);
+
   font-size: 12px;
 }
 
@@ -463,6 +512,19 @@ footer {
 
   .online {
     display: none;
+  }
+
+  .hero {
+    padding:
+      45px 0 35px;
+  }
+
+  .pet {
+    font-size: 65px;
+  }
+
+  .card {
+    padding: 22px;
   }
 
 }
