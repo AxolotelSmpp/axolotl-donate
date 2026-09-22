@@ -20,6 +20,7 @@ const products = [
     ]
   },
 
+  
   {
     id: "warden",
     name: "Warden",
@@ -39,6 +40,7 @@ const products = [
     ]
   },
 
+  
   {
     id: "fox",
     name: "Fox",
@@ -64,6 +66,7 @@ const products = [
     ]
   },
 
+  
   {
     id: "parrot",
     name: "Papūga",
