@@ -71,11 +71,6 @@ const paypalContainer = document.getElementById("paypal-button-container");
 let selectedProduct = null;
 let paypalButtons = null;
 
-
-/* =========================
-   PRODUKTŲ PANELĖS
-========================= */
-
 function renderProducts() {
   if (!productsContainer) {
     console.error("Nerastas #products elementas.");
@@ -93,34 +88,19 @@ function renderProducts() {
       card.classList.add("featured");
     }
 
-
-    /* IKONA */
-
     const icon = document.createElement("div");
     icon.className = "icon";
     icon.textContent = product.icon;
 
-
-    /* PAVADINIMAS */
-
     const title = document.createElement("h2");
     title.textContent = product.name;
-
-
-    /* APRAŠYMAS */
 
     const description = document.createElement("p");
     description.textContent = product.description;
 
-
-    /* KAINA */
-
     const price = document.createElement("div");
     price.className = "price";
     price.textContent = product.price;
-
-
-    /* PRIVILEGIJOS */
 
     const list = document.createElement("ul");
 
@@ -131,9 +111,6 @@ function renderProducts() {
 
       list.appendChild(item);
     });
-
-
-    /* APRAŠYMO MYGTUKAS */
 
     const descriptionButton = document.createElement("button");
 
@@ -154,9 +131,6 @@ function renderProducts() {
 
     });
 
-
-    /* PASIRINKTI */
-
     const button = document.createElement("button");
 
     button.className = "buy";
@@ -166,9 +140,6 @@ function renderProducts() {
     button.addEventListener("click", function () {
       selectProduct(product);
     });
-
-
-    /* PANELĖ */
 
     card.appendChild(icon);
     card.appendChild(title);
@@ -181,11 +152,6 @@ function renderProducts() {
     productsContainer.appendChild(card);
   });
 }
-
-
-/* =========================
-   PRODUKTO PASIRINKIMAS
-========================= */
 
 function selectProduct(product) {
   selectedProduct = product;
@@ -206,11 +172,6 @@ function selectProduct(product) {
     behavior: "smooth"
   });
 }
-
-
-/* =========================
-   PAYPAL
-========================= */
 
 async function loadPayPal() {
 
@@ -264,11 +225,6 @@ async function loadPayPal() {
       "❌ Nepavyko prisijungti prie PayPal.";
   }
 }
-
-
-/* =========================
-   PAYPAL MYGTUKAI
-========================= */
 
 function renderPayPalButtons() {
 
@@ -434,11 +390,6 @@ function renderPayPalButtons() {
   );
 }
 
-
-/* =========================
-   ATGAL
-========================= */
-
 function back() {
 
   checkout.classList.add("hidden");
@@ -461,11 +412,4 @@ function back() {
 
 window.back = back;
 
-
-/* =========================
-   PALEIDIMAS
-========================= */
-
 renderProducts();
-```
-
