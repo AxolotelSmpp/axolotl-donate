@@ -1,4 +1,3 @@
-```js
 const products = [
   {
     id: "axolotl",
@@ -117,18 +116,11 @@ function renderProducts() {
 
     card.className = "card";
 
-
-    /*
-      Antram rangui uždedame
-      featured dizainą.
-    */
-
     if (index === 1) {
       card.classList.add("featured");
     }
 
 
-    /* IKONA */
 
     const icon =
       document.createElement("div");
@@ -139,7 +131,6 @@ function renderProducts() {
       product.icon;
 
 
-    /* PAVADINIMAS */
 
     const title =
       document.createElement("h2");
@@ -148,16 +139,12 @@ function renderProducts() {
       product.name;
 
 
-    /* TRUMPAS APRAŠYMAS */
-
     const description =
       document.createElement("p");
 
     description.textContent =
       product.description;
 
-
-    /* KAINA */
 
     const price =
       document.createElement("div");
@@ -167,10 +154,6 @@ function renderProducts() {
     price.textContent =
       product.price;
 
-
-    /* =========================
-       PRIVILEGIJŲ SĄRAŠAS
-    ========================= */
 
     const list =
       document.createElement("ul");
@@ -188,11 +171,6 @@ function renderProducts() {
       }
     );
 
-
-    /*
-      APRAŠYMO MYGTUKAS
-    */
-
     const descriptionButton =
       document.createElement("button");
 
@@ -205,12 +183,6 @@ function renderProducts() {
     descriptionButton.textContent =
       "📖 Aprašymas";
 
-
-    /*
-      Paspaudus Aprašymas,
-      parodome / paslepiame
-      privilegijas.
-    */
 
     descriptionButton.addEventListener(
       "click",
@@ -234,11 +206,6 @@ function renderProducts() {
       }
     );
 
-
-    /* =========================
-       PASIRINKTI MYGTUKAS
-    ========================= */
-
     const button =
       document.createElement("button");
 
@@ -259,10 +226,6 @@ function renderProducts() {
       }
     );
 
-
-    /* =========================
-       SUDĖLIOJAME PANELĘ
-    ========================= */
 
     card.appendChild(icon);
 
@@ -285,9 +248,6 @@ function renderProducts() {
 }
 
 
-/* =========================
-   PRODUKTO PASIRINKIMAS
-========================= */
 
 function selectProduct(product) {
 
@@ -332,10 +292,6 @@ function selectProduct(product) {
 }
 
 
-/* =========================
-   PAYPAL ĮKĖLIMAS
-========================= */
-
 async function loadPayPal() {
 
   paypalContainer.innerHTML =
@@ -362,11 +318,6 @@ async function loadPayPal() {
       return;
     }
 
-
-    /*
-      Jeigu PayPal jau užkrautas,
-      mygtukų iš naujo nekrauname.
-    */
 
     if (window.paypal) {
 
@@ -427,10 +378,6 @@ async function loadPayPal() {
 }
 
 
-/* =========================
-   PAYPAL MYGTUKAI
-========================= */
-
 function renderPayPalButtons() {
 
   if (
@@ -449,10 +396,6 @@ function renderPayPalButtons() {
   paypalButtons =
     window.paypal.Buttons({
 
-      /* =====================
-         CREATE ORDER
-      ===================== */
-
       createOrder:
         async function () {
 
@@ -469,13 +412,6 @@ function renderPayPalButtons() {
               "Minecraft nick missing"
             );
           }
-
-
-          /*
-            Minecraft nick tikrinimas.
-            Leidžiamos raidės,
-            skaičiai ir _.
-          */
 
           if (
             !/^[A-Za-z0-9_]{3,16}$/.test(
@@ -639,10 +575,6 @@ function renderPayPalButtons() {
         },
 
 
-      /* =====================
-         PAYMENT CANCEL
-      ===================== */
-
       onCancel:
         function () {
 
@@ -651,10 +583,6 @@ function renderPayPalButtons() {
 
         },
 
-
-      /* =====================
-         PAYPAL ERROR
-      ===================== */
 
       onError:
         function (error) {
@@ -676,11 +604,6 @@ function renderPayPalButtons() {
     "#paypal-button-container"
   );
 }
-
-
-/* =========================
-   GRĮŽTI ATGAL
-========================= */
 
 function back() {
 
@@ -718,10 +641,6 @@ function back() {
 
 window.back =
   back;
-
-
-/* =========================
-   PALEIDŽIAME RANGUS
 ========================= */
 
 renderProducts();
