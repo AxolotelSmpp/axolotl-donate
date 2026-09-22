@@ -1,3 +1,4 @@
+```js
 const products = [
   {
     id: "axolotl",
@@ -64,6 +65,7 @@ const products = [
   }
 ];
 
+
 const productsContainer =
   document.getElementById("products");
 
@@ -83,236 +85,416 @@ const nickInput =
   document.getElementById("nick");
 
 const paypalContainer =
-  document.getElementById("paypal-button-container");
+  document.getElementById(
+    "paypal-button-container"
+  );
+
 
 let selectedProduct = null;
 let paypalButtons = null;
 
 
+/* =========================
+   RANGŲ PANELĖS
+========================= */
+
 function renderProducts() {
+
   if (!productsContainer) {
-    console.error("❌ Nerastas #products elementas.");
+    console.error(
+      "❌ Nerastas #products elementas."
+    );
+
     return;
   }
 
   productsContainer.innerHTML = "";
 
   products.forEach(function (product, index) {
-    const card = document.createElement("div");
+
+    const card =
+      document.createElement("div");
 
     card.className = "card";
+
+
+    /*
+      Antram rangui uždedame
+      featured dizainą.
+    */
 
     if (index === 1) {
       card.classList.add("featured");
     }
 
-    const icon = document.createElement("div");
+
+    /* IKONA */
+
+    const icon =
+      document.createElement("div");
+
     icon.className = "icon";
-    icon.textContent = product.icon;
 
-    const title = document.createElement("h2");
-    title.textContent = product.name;
+    icon.textContent =
+      product.icon;
 
-    const description = document.createElement("p");
-    description.textContent = product.description;
 
-    const price = document.createElement("div");
+    /* PAVADINIMAS */
+
+    const title =
+      document.createElement("h2");
+
+    title.textContent =
+      product.name;
+
+
+    /* TRUMPAS APRAŠYMAS */
+
+    const description =
+      document.createElement("p");
+
+    description.textContent =
+      product.description;
+
+
+    /* KAINA */
+
+    const price =
+      document.createElement("div");
+
     price.className = "price";
-    price.textContent = product.price;
 
-    const list = document.createElement("ul");
+    price.textContent =
+      product.price;
 
-    product.features.forEach(function (feature) {
-      const item = document.createElement("li");
 
-      item.textContent = "✓ " + feature;
+    /* =========================
+       PRIVILEGIJŲ SĄRAŠAS
+    ========================= */
 
-      list.appendChild(item);
-    });
+    const list =
+      document.createElement("ul");
 
-    const button = document.createElement("button");
+    product.features.forEach(
+      function (feature) {
+
+        const item =
+          document.createElement("li");
+
+        item.textContent =
+          "✓ " + feature;
+
+        list.appendChild(item);
+      }
+    );
+
+
+    /*
+      APRAŠYMO MYGTUKAS
+    */
+
+    const descriptionButton =
+      document.createElement("button");
+
+    descriptionButton.className =
+      "description-btn";
+
+    descriptionButton.type =
+      "button";
+
+    descriptionButton.textContent =
+      "📖 Aprašymas";
+
+
+    /*
+      Paspaudus Aprašymas,
+      parodome / paslepiame
+      privilegijas.
+    */
+
+    descriptionButton.addEventListener(
+      "click",
+      function () {
+
+        list.classList.toggle("show");
+
+
+        if (
+          list.classList.contains("show")
+        ) {
+
+          descriptionButton.textContent =
+            "📕 Paslėpti aprašymą";
+
+        } else {
+
+          descriptionButton.textContent =
+            "📖 Aprašymas";
+        }
+      }
+    );
+
+
+    /* =========================
+       PASIRINKTI MYGTUKAS
+    ========================= */
+
+    const button =
+      document.createElement("button");
 
     button.className = "buy";
-    button.type = "button";
-    button.textContent = "🫧 Pasirinkti";
 
-    button.addEventListener("click", function () {
-      selectProduct(product);
-    });
+    button.type = "button";
+
+    button.textContent =
+      "🫧 Pasirinkti";
+
+
+    button.addEventListener(
+      "click",
+      function () {
+
+        selectProduct(product);
+
+      }
+    );
+
+
+    /* =========================
+       SUDĖLIOJAME PANELĘ
+    ========================= */
 
     card.appendChild(icon);
+
     card.appendChild(title);
+
     card.appendChild(description);
+
     card.appendChild(price);
+
+    card.appendChild(descriptionButton);
+
     card.appendChild(list);
+
     card.appendChild(button);
 
+
     productsContainer.appendChild(card);
+
   });
 }
 
 
+/* =========================
+   PRODUKTO PASIRINKIMAS
+========================= */
+
 function selectProduct(product) {
-  selectedProduct = product;
 
-  chosen.textContent = product.name;
-  chosenPrice.textContent = product.price;
+  selectedProduct =
+    product;
 
-  message.innerHTML = "";
-  nickInput.value = "";
+
+  chosen.textContent =
+    product.name;
+
+
+  chosenPrice.textContent =
+    product.price;
+
+
+  message.innerHTML =
+    "";
+
+
+  nickInput.value =
+    "";
+
 
   document
     .getElementById("shop")
     .classList.add("hidden");
 
-  checkout.classList.remove("hidden");
+
+  checkout.classList.remove(
+    "hidden"
+  );
+
 
   loadPayPal();
+
 
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   });
+
 }
 
 
+/* =========================
+   PAYPAL ĮKĖLIMAS
+========================= */
+
 async function loadPayPal() {
+
   paypalContainer.innerHTML =
     "⏳ Kraunamas PayPal...";
 
+
   try {
+
     const configResponse =
-      await fetch("/api/paypal/config");
+      await fetch(
+        "/api/paypal/config"
+      );
+
 
     const config =
       await configResponse.json();
 
+
     if (!config.clientId) {
+
       paypalContainer.innerHTML =
         "❌ PayPal Client ID nerastas.";
 
       return;
     }
 
+
+    /*
+      Jeigu PayPal jau užkrautas,
+      mygtukų iš naujo nekrauname.
+    */
+
     if (window.paypal) {
+
       renderPayPalButtons();
+
       return;
     }
 
+
     const script =
-      document.createElement("script");
+      document.createElement(
+        "script"
+      );
+
 
     script.src =
       "https://www.paypal.com/sdk/js?client-id=" +
-      encodeURIComponent(config.clientId) +
+      encodeURIComponent(
+        config.clientId
+      ) +
       "&currency=EUR";
 
-    script.onload = function () {
-      renderPayPalButtons();
-    };
 
-    script.onerror = function () {
-      paypalContainer.innerHTML =
-        "❌ Nepavyko užkrauti PayPal.";
-    };
+    script.onload =
+      function () {
 
-    document.head.appendChild(script);
+        renderPayPalButtons();
+
+      };
+
+
+    script.onerror =
+      function () {
+
+        paypalContainer.innerHTML =
+          "❌ Nepavyko užkrauti PayPal.";
+
+      };
+
+
+    document.head.appendChild(
+      script
+    );
+
 
   } catch (error) {
+
     console.error(
       "PayPal config klaida:",
       error
     );
 
+
     paypalContainer.innerHTML =
       "❌ Nepavyko prisijungti prie PayPal.";
+
   }
 }
 
 
+/* =========================
+   PAYPAL MYGTUKAI
+========================= */
+
 function renderPayPalButtons() {
-  if (!window.paypal || !selectedProduct) {
+
+  if (
+    !window.paypal ||
+    !selectedProduct
+  ) {
+
     return;
   }
 
-  paypalContainer.innerHTML = "";
+
+  paypalContainer.innerHTML =
+    "";
+
 
   paypalButtons =
     window.paypal.Buttons({
 
-      createOrder: async function () {
-        const nick =
-          nickInput.value.trim();
+      /* =====================
+         CREATE ORDER
+      ===================== */
 
-        if (!nick) {
-          message.innerHTML =
-            "❌ Pirmiausia įrašyk savo Minecraft nick.";
+      createOrder:
+        async function () {
 
-          throw new Error(
-            "Minecraft nick missing"
-          );
-        }
-
-        if (!/^[A-Za-z0-9_]{3,16}$/.test(nick)) {
-          message.innerHTML =
-            "❌ Minecraft nick turi būti 3–16 simbolių.";
-
-          throw new Error(
-            "Invalid Minecraft nick"
-          );
-        }
-
-        const response =
-          await fetch(
-            "/api/paypal/create-order",
-            {
-              method: "POST",
-
-              headers: {
-                "Content-Type":
-                  "application/json"
-              },
-
-              body: JSON.stringify({
-                productId:
-                  selectedProduct.id,
-
-                minecraftName:
-                  nick
-              })
-            }
-          );
-
-        const data =
-          await response.json();
-
-        if (!response.ok) {
-          message.innerHTML =
-            "❌ " +
-            (data.error ||
-              "Nepavyko sukurti užsakymo.");
-
-          throw new Error(
-            data.error ||
-              "Create order failed"
-          );
-        }
-
-        return data.id;
-      },
+          const nick =
+            nickInput.value.trim();
 
 
-      onApprove: async function (data) {
-        const nick =
-          nickInput.value.trim();
+          if (!nick) {
 
-        message.innerHTML =
-          "⏳ Patvirtinamas PayPal mokėjimas...";
+            message.innerHTML =
+              "❌ Pirmiausia įrašyk savo Minecraft nick.";
 
-        try {
+            throw new Error(
+              "Minecraft nick missing"
+            );
+          }
+
+
+          /*
+            Minecraft nick tikrinimas.
+            Leidžiamos raidės,
+            skaičiai ir _.
+          */
+
+          if (
+            !/^[A-Za-z0-9_]{3,16}$/.test(
+              nick
+            )
+          ) {
+
+            message.innerHTML =
+              "❌ Minecraft nick turi būti 3–16 simbolių.";
+
+            throw new Error(
+              "Invalid Minecraft nick"
+            );
+          }
+
+
           const response =
             await fetch(
-              "/api/paypal/capture-order",
+              "/api/paypal/create-order",
               {
                 method: "POST",
 
@@ -321,73 +503,174 @@ function renderPayPalButtons() {
                     "application/json"
                 },
 
-                body: JSON.stringify({
-                  orderId:
-                    data.orderID,
+                body:
+                  JSON.stringify({
 
-                  productId:
-                    selectedProduct.id,
+                    productId:
+                      selectedProduct.id,
 
-                  minecraftName:
-                    nick
-                })
+                    minecraftName:
+                      nick
+
+                  })
               }
             );
 
-          const result =
+
+          const data =
             await response.json();
 
+
           if (!response.ok) {
+
             message.innerHTML =
               "❌ " +
               (
-                result.error ||
-                "Mokėjimo nepavyko patvirtinti."
+                data.error ||
+                "Nepavyko sukurti užsakymo."
               );
 
-            return;
+
+            throw new Error(
+              data.error ||
+              "Create order failed"
+            );
           }
 
-          message.innerHTML =
-            "✅ Mokėjimas sėkmingas!<br><br>" +
 
-            "Rangas: <strong>" +
-            result.order.product +
-            "</strong><br>" +
+          return data.id;
 
-            "Minecraft nick: <strong>" +
-            result.order.minecraftName +
-            "</strong><br><br>" +
+        },
 
-            "🦎 Užsakymas: <strong>" +
-            result.order.id +
-            "</strong>";
 
-          nickInput.value = "";
+      /* =====================
+         PAYMENT APPROVED
+      ===================== */
 
-        } catch (error) {
-          console.error(error);
+      onApprove:
+        async function (data) {
+
+          const nick =
+            nickInput.value.trim();
+
 
           message.innerHTML =
-            "❌ Įvyko klaida patvirtinant mokėjimą.";
+            "⏳ Patvirtinamas PayPal mokėjimas...";
+
+
+          try {
+
+            const response =
+              await fetch(
+                "/api/paypal/capture-order",
+                {
+                  method: "POST",
+
+                  headers: {
+                    "Content-Type":
+                      "application/json"
+                  },
+
+                  body:
+                    JSON.stringify({
+
+                      orderId:
+                        data.orderID,
+
+                      productId:
+                        selectedProduct.id,
+
+                      minecraftName:
+                        nick
+
+                    })
+                }
+              );
+
+
+            const result =
+              await response.json();
+
+
+            if (!response.ok) {
+
+              message.innerHTML =
+                "❌ " +
+                (
+                  result.error ||
+                  "Mokėjimo nepavyko patvirtinti."
+                );
+
+              return;
+            }
+
+
+            message.innerHTML =
+              "✅ Mokėjimas sėkmingas!<br><br>" +
+
+              "Rangas: <strong>" +
+              result.order.product +
+              "</strong><br>" +
+
+              "Minecraft nick: <strong>" +
+              result.order.minecraftName +
+              "</strong><br><br>" +
+
+              "🦎 Užsakymas: <strong>" +
+              result.order.id +
+              "</strong>";
+
+
+            nickInput.value =
+              "";
+
+          } catch (error) {
+
+            console.error(
+              error
+            );
+
+
+            message.innerHTML =
+              "❌ Įvyko klaida patvirtinant mokėjimą.";
+
+          }
+
+        },
+
+
+      /* =====================
+         PAYMENT CANCEL
+      ===================== */
+
+      onCancel:
+        function () {
+
+          message.innerHTML =
+            "⚠️ PayPal mokėjimas atšauktas.";
+
+        },
+
+
+      /* =====================
+         PAYPAL ERROR
+      ===================== */
+
+      onError:
+        function (error) {
+
+          console.error(
+            error
+          );
+
+
+          message.innerHTML =
+            "❌ PayPal klaida. Bandyk dar kartą.";
+
         }
-      },
-
-
-      onCancel: function () {
-        message.innerHTML =
-          "⚠️ PayPal mokėjimas atšauktas.";
-      },
-
-
-      onError: function (error) {
-        console.error(error);
-
-        message.innerHTML =
-          "❌ PayPal klaida. Bandyk dar kartą.";
-      }
 
     });
+
 
   paypalButtons.render(
     "#paypal-button-container"
@@ -395,26 +678,51 @@ function renderPayPalButtons() {
 }
 
 
+/* =========================
+   GRĮŽTI ATGAL
+========================= */
 
 function back() {
-  checkout.classList.add("hidden");
+
+  checkout.classList.add(
+    "hidden"
+  );
+
 
   document
     .getElementById("shop")
-    .classList.remove("hidden");
+    .classList.remove(
+      "hidden"
+    );
 
-  selectedProduct = null;
 
-  paypalContainer.innerHTML = "";
-  message.innerHTML = "";
+  selectedProduct =
+    null;
+
+
+  paypalContainer.innerHTML =
+    "";
+
+
+  message.innerHTML =
+    "";
+
 
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   });
+
 }
 
-window.back = back;
 
+window.back =
+  back;
+
+
+/* =========================
+   PALEIDŽIAME RANGUS
+========================= */
 
 renderProducts();
+```
