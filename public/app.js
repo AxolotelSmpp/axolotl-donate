@@ -4,7 +4,7 @@ const products = [
     name: "Axolotl",
     icon: "🦎",
     price: "0.99 €",
-    description: "Palaikyk Axolotl Network ir gauk išskirtines privilegijas.",
+    description: "",
     features: [
       "Užrašas prieš vardo ir TAB sąraše: Axolotl",
       "Būsite labiau gerbiamas kitų žaidėjų",
@@ -25,11 +25,17 @@ const products = [
     name: "Warden",
     icon: "🛡️",
     price: "1.49 €",
-    description: "Galingesnis rėmėjo rangas tikriems serverio palaikytojams.",
+    description: "",
     features: [
-      "Warden statusas",
-      "Papildomos privilegijos",
-      "Warden išskirtinumas"
+    "Gauna užrašą prie slapyvardžio ir TAB sąraše: Warden",
+    "Gauna visas Axolotl paslaugos komandas",
+    "Gauna paslaugos rinkinuką (/kit Warden)",
+    "Rinkinuką galima atsiimti kas 7 dienas",
+    "Gali prisijungti į pilną serverį",
+    "Gali turėti 5 namus",
+    "Gali rašyti spalvotai bendrame chat'e",
+
+    "Komanda /feed – galimybė sau numalšinti alkį"
     ]
   },
 
@@ -38,11 +44,23 @@ const products = [
     name: "Fox",
     icon: "🦊",
     price: "1.99 €",
-    description: "Išskirtinis Fox rangas ir daugiau privilegijų.",
+    description: "",
     features: [
-      "Fox statusas",
-      "Fox privilegijos",
-      "Išskirtinis rangas"
+      "Gauna užrašą prie slapyvardžio ir TAB sąraše: Fox",
+    "Gauna visas Coal ir Iron paslaugų komandas",
+    "Gauna paslaugos rinkinuką (/kit fox)",
+    "Rinkinuką galima atsiimti kas 7 dienas",
+    "Gali prisijungti į pilną serverį",
+    "Gali turėti 10 namų",
+    "Gali rašyti spalvotas žinutes",
+
+    "Komanda /back – galimybė grįžti į prieš tai buvusią vietą",
+    "Komanda /enderchest – galimybė bet kur naudotis pabaigos skrynia",
+    "Komanda /ptime – galimybė sau pasikeisti laiką į bet kokį",
+    "Komanda /heal – galimybė save pasigydyti",
+    "Komanda /sellhand – galimybė parduoti rankoje esantį daiktą",
+    "Komanda /pv – gaunate 1 kuprinę savo daiktams",
+
     ]
   },
 
@@ -51,11 +69,26 @@ const products = [
     name: "Papūga",
     icon: "🦜",
     price: "2.50 €",
-    description: "Aukščiausias iš šių rėmėjo rangų.",
+    description: "",
     features: [
-      "Papūga statusas",
-      "Papūgos privilegijos",
-      "Aukščiausias rangas"
+Gauna užrašą prie slapyvardžio ir TAB sąraše: Papūga",
+    "Gauna visas Axolotl, Warden ir Fox paslaugų komandas",
+    "Gauna paslaugos rinkinuką (/kit Papuga)",
+    "Rinkinuką galima atsiimti kas 10 dienų",
+    "Gali prisijungti į pilną serverį",
+    "Gali turėti 15 namų",
+    "Iš serverio išmes už AFK kas 30 minučių (įprastai 5 minutės)",
+
+    "Komanda /fly – galimybė skraidyti",
+    "Komanda /itemname – galimybė pervadinti daiktą",
+    "Komanda /feed – galimybė numalšinti alkį kitiems",
+    "Komanda /heal – galimybė pagydyti kitus",
+    "Komanda /nick – galimybė pasikeisti slapyvardžio spalvą",
+    "Komanda /anvil – galimybė naudotis priekalu bet kur",
+    "Komanda /auto – automatinis daiktų surinkimas",
+    "Komanda /repair – galimybė susitaisyti daiktą kas 1 valandą",
+    "Komanda /pv – gaunate 2 kuprines savo daiktams",
+
     ]
   }
 ];
