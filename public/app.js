@@ -16,7 +16,7 @@ const products = [
       "Gali prisijungti į pilną serverį",
       "Komanda /craft",
       "Komanda /recipe",
-      "Komanda /hat ant Axolotl"
+      "Komanda /hat"
     ]
   },
 
@@ -47,7 +47,7 @@ const products = [
     description: "Fox rangas su daugiau komandų ir papildomų privilegijų.",
     features: [
       "Gauna užrašą prie slapyvardžio ir TAB sąraše: Fox",
-      "Gauna visas Coal ir Iron paslaugų komandas",
+      "Gauna visas Axolotl ir Warden paslaugų komandas",
       "Gauna paslaugos rinkinuką (/kit fox)",
       "Rinkinuką galima atsiimti kas 7 dienas",
       "Gali prisijungti į pilną serverį",
