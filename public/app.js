@@ -11,7 +11,6 @@ const products = [
       "Axolotl rinkinukas (/kit axolotl) kas 1 dieną",
       "Gali turėti 4 /sethome",
       "Gali aukcione pardavinėti 4 daiktus vienu metu",
-      "Gali turėti 4 rezidencijas",
       "Gauna skelbimo komandą (/skelbti)",
       "Gali prisijungti į pilną serverį",
       "Komanda /craft",
